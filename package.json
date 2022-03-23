@@ -10,7 +10,7 @@
     "test": "tsc && jasmine",
     "dev": "nodemon src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node build/index.js"
   },
   "keywords": [],
   "author": "",
