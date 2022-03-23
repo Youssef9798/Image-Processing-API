@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Processing API</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="w-full h-screen bg-white text-gray-900 flex container mx-auto justify-start text-center flex-col">
+    <h1 class="text-2xl py-9 font-bold text-stone-800 w-full">Welcome to Our Image Processing App</h1>
+    <div class="flex flex-col items-center gap-5">
+      <p class="w-fit bg-blue-400 font-bold py-3 px-4 rounded-full text-white">Please enter your image name followed by the required width and height!</p>
+
+      <% if(error && error !== '' && error !== null) { %>
+        <p class="w-fit bg-red-300 font-bold py-2 px-4 rounded-full text-white text-base"><%= error %> </p>
+      <% } %>
+
+      <% if(image && image !== '' && image !== null) { %>
+        <p class="w-fit bg-slate-700 font-bold py-2 px-4 rounded-full text-white text-base">Original Image name: <%= image %> </p>
+        <img class="w-full h-full rounded-lg shadow-2xl" src="/images/full/<%= image %>">
+      <% } %>
+
+      <% if(resizedImage && resizedImage !== '' && resizedImage !== null) { %>
+        <p class="w-fit bg-slate-700 font-bold py-2 px-4 rounded-full text-white text-base">Resized Image name: <%= resizedImage %> </p>
+        <img class="w-full h-full rounded-lg shadow-2xl" src="/images/thumbnails/<%= resizedImage %>">
+      <% } %>
+
+    </div>
+  </div>
+</body>
+</html>
