@@ -21,7 +21,7 @@ app.use(index_1.default.routes);
 /**
  * App Routes
  */
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
     res.status(200).render('index', {
         error: '',
         image: '',
