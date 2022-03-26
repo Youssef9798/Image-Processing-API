@@ -24,6 +24,6 @@ Finally, To start the app use the following command:
 
 ## The Endpoints
 The avaliable endpoints:
-- '/'
-- '/api/image'
-- '/api/image?image_name=${one of the listed available images}&width=${based on your selection}&height=${based on your selection}&'
+- 'http://localhost:8080/'
+- 'http://localhost:8080/api/images'
+- 'http://localhost:8080/api/images?filename=icelandwaterfall.jpg&width=100&height=100'
