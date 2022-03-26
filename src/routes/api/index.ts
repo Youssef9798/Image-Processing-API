@@ -1,34 +1,72 @@
 import express, { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
-import { Images } from '../../utilities/getAllImages';
+import { Images } from '../../utilities/imagesHandler';
 
 const routes = express.Router();
 
-routes.get('/api/image', async (req: Request, res: Response) => {
-  const { height, width, image_name } = req.query;
-
-  if (!image_name) {
+routes.get('/api/images', async (req: Request, res: Response): Promise<void> => {
+  // const { height, width, filename } = req.query;
+  const height: string | unknown = req.query.height;
+  const width: string | unknown = req.query.width;
+  const filename: string | unknown = req.query.filename;
+  if(!req.query){
     return res.status(401).render('index', {
-      error: 'No image Name Exist',
+      error: 'No input, please make sure to add the inputs',
+      image: '',
+      resizedImage: '',
+    });
+  }
+  
+  const invHeight:Number = parseInt(`${height}`);
+  const invWidth:Number = parseInt(`${width}`);
+  if (!filename) {
+    return res.status(401).render('index', {
+      error: 'No image input',
       image: '',
       resizedImage: '',
     });
   }
   if (!height || !width) {
     return res.status(401).render('index', {
-      error: 'invalid height or width, try again',
+      error: 'Enter a width and height',
+      image: '',
+      resizedImage: '',
+    });
+  }
+  
+  if(invHeight <= 0){
+    return res.status(401).render('index', {
+      error: 'Enter a valid Height',
       image: '',
       resizedImage: '',
     });
   }
 
+  if(invWidth <= 0){
+    return res.status(401).render('index', {
+      error: 'Enter a valid Width',
+      image: '',
+      resizedImage: '',
+    });
+  }
+
+  if(`${filename}`.split('.')[1] !== 'jpg'){
+    return res.status(401).render('index', {
+      error: 'Enter a valid image, image must be jpg or png',
+      image: '',
+      resizedImage: '',
+    });
+  }
+
+  
+
   const imagesClass = new Images();
   const originalImages: unknown = await imagesClass.getAllImages(
     path.resolve('./assets/images/full')
   );
-  const imageExist = (originalImages as string[]).filter((el) => {
-    return el === image_name;
+  const imageExist: String[] = (originalImages as string[]).filter((el) => {
+    return el === filename;
   });
 
   if (!imageExist[0]) {
@@ -38,17 +76,19 @@ routes.get('/api/image', async (req: Request, res: Response) => {
       resizedImage: ``,
     });
   } else {
-    const imageBuffer = fs.readFileSync(`./assets/images/full/${image_name}`);
-    const processedImage = await imagesClass.save(
+    const imageBuffer: Buffer = fs.readFileSync(`./assets/images/full/${filename}`);
+    const processedImage: String = await imagesClass.resize(
       imageBuffer,
-      +width,
-      +height,
-      `${image_name}`
+      +invWidth,
+      +invHeight,
+      `${filename}`
     );
-
+    // console.log(res.req.originalUrl);
+    // console.log(res.req.headers.host);
+    
     res.status(200).render('index', {
       error: '',
-      image: `${image_name}`,
+      image: `${filename}`,
       resizedImage: `${processedImage}`,
     });
   }

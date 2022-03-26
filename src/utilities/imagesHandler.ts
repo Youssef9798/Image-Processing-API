@@ -20,17 +20,29 @@ export class Images {
   // public imageProcessing(){
 
   // }
-  async save(buffer: Buffer, w: number, h: number, name: unknown) {
+  async resize(buffer: Buffer, w: number, h: number, name: unknown): Promise<String> {
+    
     const fileName = (name as string).split('.')[0];
     const fileExt = (name as string).split('.')[1];
     const newName = Images.filename(fileName, fileExt, w, h);
+    const allthumbs = await this.getAllImages(path.resolve('./assets/images/thumbnails'));
+
+    const imageExist = (allthumbs as string[]).filter((el) => {
+      return el === newName;
+    });
+    
+    if(imageExist){
+      return imageExist[0];
+    }
+
     const imagesFolder = path.resolve(`./assets/images/thumbnails/${newName}`);
+
+
     await sharp(buffer)
-      .resize({
-        width: w,
-        height: h,
-      })
+      .resize(w, h)
       .toFile(imagesFolder);
+
+
     return newName;
   }
 

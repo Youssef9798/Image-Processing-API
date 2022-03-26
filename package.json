@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "tailwind:css": "postcss assets/css/tailwind.css -o assets/css/style.css --watch",
+    "prettier": "prettier --check \"src/**/*.ts\" && prettier --write \"src/**/*.ts\"",
     "lint": "eslint src/*.ts",
     "lint:f": "eslint src/*.ts --fix",
     "test": "tsc && jasmine",
@@ -16,16 +17,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "autoprefixer": "^10.4.4",
     "ejs": "^3.1.6",
     "express": "^4.17.3",
-    "http-status-codes": "^2.2.0",
-    "jasmine": "^4.0.2",
-    "jasmine-spec-reporter": "^7.0.0",
-    "postcss": "^8.4.12",
-    "postcss-cli": "^9.1.0",
-    "sharp": "^0.30.3",
-    "tailwindcss": "^3.0.23"
+    "sharp": "^0.30.3"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
@@ -34,11 +28,18 @@
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
+    "autoprefixer": "^10.4.4",
     "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "http-status-codes": "^2.2.0",
+    "jasmine": "^4.0.2",
+    "jasmine-spec-reporter": "^7.0.0",
     "nodemon": "^2.0.15",
+    "postcss": "^8.4.12",
+    "postcss-cli": "^9.1.0",
     "supertest": "^6.2.2",
+    "tailwindcss": "^3.0.23",
     "ts-node": "^10.7.0",
     "typescipt": "^1.0.0"
   }
